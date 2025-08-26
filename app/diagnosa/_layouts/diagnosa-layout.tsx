@@ -39,11 +39,7 @@ interface FormData {
   additional: AdditionalFormValues | null;
 }
 
-interface IProps {
-  features: string[];
-}
-
-function DiagnosaLayout({ features }: IProps) {
+function DiagnosaLayout() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     patient: null,
@@ -72,6 +68,70 @@ function DiagnosaLayout({ features }: IProps) {
       vitals: null,
     });
     setCurrentStep(0);
+  }
+
+  const handleDiagnosa = async (data: AdditionalFormValues) => {
+    setLoading(true);
+
+    const defaultFeatures = ["id_casebase", "no_rm", "nama", "penyakit"];
+    let features: string[] = [];
+    try {
+      const res = await fetch('http://localhost:8000/health', {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        features = [...defaultFeatures, ...data.model_info.features];
+      } else throw new Error('Gagal mendapatkan features');
+    } catch (error) {
+      throw Error((error as Error)?.message || 'Gagal mendapatkan features');
+    }
+
+    const payload = {
+      data: normalizeData({
+        ...formData.clinicalSymptoms,
+        ...formData.laboratory,
+        ...formData.patient,
+        ...formData.physicalExam,
+        ...formData.vitals,
+        ...data
+      }),
+      topk: 3,
+      similar_fields: features
+    }
+
+    if (!payload.data.id_casebase) {
+      payload.data.id_casebase = generateRandomCBId();
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      additional: data
+    }));
+
+    try {
+      const res = await fetch('http://localhost:8000/predict', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setDiagnosis(data);
+        navigate.push('/diagnosa/hasil');
+      } else {
+        if (res.status === 422) {
+          const data = await res.json();
+          toast.error(data?.detail[0].msg || 'Gagal untuk mendiagnosa data');
+        } else toast.error('Gagal untuk mendiagnosa data');
+      }
+    } catch (error) {
+      toast.error((error as Error).message)
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -249,55 +309,7 @@ function DiagnosaLayout({ features }: IProps) {
                     loading={loading}
                     data={formData.additional}
                     onClickPrev={() => setCurrentStep(Math.max(0, currentStep - 1))}
-                    onSuccess={async (data) => {
-                      setLoading(true);
-
-                      const payload = {
-                        data: normalizeData({
-                          ...formData.clinicalSymptoms,
-                          ...formData.laboratory,
-                          ...formData.patient,
-                          ...formData.physicalExam,
-                          ...formData.vitals,
-                          ...data
-                        }),
-                        topk: 3,
-                        similar_fields: features
-                      }
-
-                      if (!payload.data.id_casebase) {
-                        payload.data.id_casebase = generateRandomCBId();
-                      }
-
-                      setFormData((prev) => ({
-                        ...prev,
-                        additional: data
-                      }));
-
-                      try {
-                        const res = await fetch('http://localhost:8000/predict', {
-                          method: 'POST',
-                          body: JSON.stringify(payload),
-                          headers: { 'Content-Type': 'application/json' },
-                        });
-
-                        if (res.ok) {
-                          const data = await res.json();
-                          setDiagnosis(data);
-                          console.log(data);
-                          navigate.push('/diagnosa/hasil');
-                        } else {
-                          if (res.status === 422) {
-                            const data = await res.json();
-                            toast.error(data?.detail[0].msg || 'Gagal untuk mendiagnosa data');
-                          } else toast.error('Gagal untuk mendiagnosa data');
-                        }
-                      } catch (error) {
-                        toast.error((error as Error).message)
-                      } finally {
-                        setLoading(false);
-                      }
-                    }}
+                    onSuccess={handleDiagnosa}
                   />
                 )}
               </CardContent>
