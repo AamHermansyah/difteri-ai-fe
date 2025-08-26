@@ -9,6 +9,7 @@ export const patientSchema = z.object({
   no_rm: z
     .string()
     .trim()
+    .regex(/^RM-\d+$/, "Format harus RM-XXXX (contoh: RM-1)")
     .min(1, "Nomor rekam medis wajib diisi")
     .max(50, "Terlalu panjang"),
   nama: z

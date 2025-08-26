@@ -9,7 +9,7 @@ import {
   RefreshCw,
   Zap,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, generateRandomCBId, normalizeData } from '@/lib/utils';
 import Navbar from '../../_layouts/navbar';
 import PatientForm from '../_components/patient-form';
 import ClinicalSymptomsForm from '../_components/clinical-symptoms-form';
@@ -26,6 +26,9 @@ import {
   PhysicalExamFormOutput,
   VitalsFormOutput
 } from '@/lib/schemas/diagnosa';
+import { toast } from 'sonner';
+import { useDiagnosisStore } from '@/stores/use-diagnosis-store';
+import { useRouter } from 'next/navigation';
 
 interface FormData {
   patient: PatientFormOutput | null;
@@ -36,7 +39,12 @@ interface FormData {
   additional: AdditionalFormValues | null;
 }
 
-function DiagnosaLayout() {
+interface IProps {
+  features: string[];
+}
+
+function DiagnosaLayout({ features }: IProps) {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     patient: null,
     physicalExam: null,
@@ -47,6 +55,24 @@ function DiagnosaLayout() {
   });
   const [currentStep, setCurrentStep] = useState(0);
   const stepProgress = ((currentStep + 1) / formSections.length) * 100;
+
+  const { setDiagnosis } = useDiagnosisStore();
+  const navigate = useRouter();
+  let resetPhysicalFormCb: () => void;
+
+  const handleReset = () => {
+    toast.warning('Formulir berhasil direset!');
+    resetPhysicalFormCb();
+    setFormData({
+      additional: null,
+      clinicalSymptoms: null,
+      laboratory: null,
+      patient: null,
+      physicalExam: null,
+      vitals: null,
+    });
+    setCurrentStep(0);
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -70,7 +96,7 @@ function DiagnosaLayout() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+              <Button variant="outline" onClick={handleReset} className="border-white/20 text-white hover:bg-white/10">
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Reset Form
               </Button>
@@ -148,6 +174,9 @@ function DiagnosaLayout() {
                   <PatientForm
                     data={formData.patient}
                     onClickPrev={() => setCurrentStep(Math.max(0, currentStep - 1))}
+                    handleReset={(cb) => {
+                      resetPhysicalFormCb = cb;
+                    }}
                     onSuccess={(data) => {
                       setFormData((prev) => ({
                         ...prev,
@@ -217,13 +246,57 @@ function DiagnosaLayout() {
 
                 {currentStep === 5 && (
                   <AdditionalForm
+                    loading={loading}
                     data={formData.additional}
                     onClickPrev={() => setCurrentStep(Math.max(0, currentStep - 1))}
-                    onSuccess={(data) => {
+                    onSuccess={async (data) => {
+                      setLoading(true);
+
+                      const payload = {
+                        data: normalizeData({
+                          ...formData.clinicalSymptoms,
+                          ...formData.laboratory,
+                          ...formData.patient,
+                          ...formData.physicalExam,
+                          ...formData.vitals,
+                          ...data
+                        }),
+                        topk: 3,
+                        similar_fields: features
+                      }
+
+                      if (!payload.data.id_casebase) {
+                        payload.data.id_casebase = generateRandomCBId();
+                      }
+
                       setFormData((prev) => ({
                         ...prev,
                         additional: data
-                      }))
+                      }));
+
+                      try {
+                        const res = await fetch('http://localhost:8000/predict', {
+                          method: 'POST',
+                          body: JSON.stringify(payload),
+                          headers: { 'Content-Type': 'application/json' },
+                        });
+
+                        if (res.ok) {
+                          const data = await res.json();
+                          setDiagnosis(data);
+                          console.log(data);
+                          navigate.push('/diagnosa/hasil');
+                        } else {
+                          if (res.status === 422) {
+                            const data = await res.json();
+                            toast.error(data?.detail[0].msg || 'Gagal untuk mendiagnosa data');
+                          } else toast.error('Gagal untuk mendiagnosa data');
+                        }
+                      } catch (error) {
+                        toast.error((error as Error).message)
+                      } finally {
+                        setLoading(false);
+                      }
                     }}
                   />
                 )}

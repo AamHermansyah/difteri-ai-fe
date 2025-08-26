@@ -31,9 +31,10 @@ interface IProps {
   onClickPrev?: () => void;
   onSuccess?: (data: PatientFormOutput) => void;
   data: PatientFormOutput | null;
+  handleReset: (cb: () => void) => void;
 }
 
-function PatientForm({ disabledPrev, onSuccess, onClickPrev, data }: IProps) {
+function PatientForm({ disabledPrev, onSuccess, onClickPrev, data, handleReset }: IProps) {
   const form = useForm<PatientFormInput>({
     resolver: zodResolver(patientSchema),
     mode: "onChange",
@@ -44,6 +45,8 @@ function PatientForm({ disabledPrev, onSuccess, onClickPrev, data }: IProps) {
       usia: 0
     }
   });
+
+  handleReset(form.reset);
 
   const onSubmit = (values: PatientFormOutput) => {
     onSuccess?.(values);
@@ -76,9 +79,9 @@ function PatientForm({ disabledPrev, onSuccess, onClickPrev, data }: IProps) {
                 </FormLabel>
                 <FormControl>
                   <Input
+                    {...field}
                     placeholder="CB-0001 (opsional)"
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-500"
-                    {...field}
                   />
                 </FormControl>
                 <FormMessage />
@@ -144,11 +147,11 @@ function PatientForm({ disabledPrev, onSuccess, onClickPrev, data }: IProps) {
               <FormControl>
                 <div className="flex rounded-md shadow-xs">
                   <Input
+                    {...field}
                     inputMode="decimal"
                     step="0.1"
                     placeholder="mis. 5 atau 2.5"
                     className="bg-white/10 border-white/20 text-white placeholder:text-gray-500"
-                    {...field}
                     value={field.value as string | number}
                   />
                   <span className="border-input text-muted-foreground -z-10 inline-flex items-center rounded-e-md border border-l-0 px-3 text-sm">
@@ -181,7 +184,7 @@ function PatientForm({ disabledPrev, onSuccess, onClickPrev, data }: IProps) {
             disabled={disabledPrev}
             className="border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
+            <ChevronLeft className="w-4 h-4" />
             Sebelumnya
           </Button>
 
@@ -190,7 +193,7 @@ function PatientForm({ disabledPrev, onSuccess, onClickPrev, data }: IProps) {
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 disabled:opacity-60"
           >
             Selanjutnya
-            <ChevronRight className="w-4 h-4 ml-2" />
+            <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
       </form>

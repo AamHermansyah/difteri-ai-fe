@@ -181,7 +181,7 @@ function ClinicalSymptomsForm({ disabledPrev, onClickPrev, onSuccess, data }: IP
             disabled={disabledPrev}
             className="border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
+            <ChevronLeft className="w-4 h-4" />
             Sebelumnya
           </Button>
 
@@ -190,7 +190,7 @@ function ClinicalSymptomsForm({ disabledPrev, onClickPrev, onSuccess, data }: IP
             className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 disabled:opacity-60"
           >
             Selanjutnya
-            <ChevronRight className="w-4 h-4 ml-2" />
+            <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
       </form>

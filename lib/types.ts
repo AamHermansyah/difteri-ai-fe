@@ -1,0 +1,62 @@
+export interface CaseRecord {
+  id_casebase: number;
+  no_rm: number;
+  nama: string;
+  usia: number;
+  mual: number;
+  muntah: number;
+  batuk: number;
+  pilek: number;
+  kontak_erat_difteri: number;
+  status_imunisasi: number;
+  nyeri_menelan: number;
+  suara_mengorok: number;
+  sesak: number;
+  antibiotik_sudah_diberi: number;
+  pembesaran_kelenjar: number;
+  bullneck: number;
+  terdapat_membran_di: string;
+  luas_membran: number;
+  berdarah_saat_di_swab: number;
+  lama_demam: number;
+  hemoglobin: number;
+  hematrokit: number;
+  eritrosit: number;
+  m_c_v: number;
+  m_c_h: number;
+  m_c_h_c: number;
+  leukosit: number;
+  glukosa: number;
+  basofil: number;
+  eosinofil: number;
+  neutrofil: number;
+  limposit: number;
+  monosit: number;
+  trombosit: number;
+  laju_endap_darah: number;
+  natrium: number;
+  kalium: number;
+  khlorida: number;
+  ph: number;
+  "3pco2": number;
+  be: number;
+  so2: number;
+  bb: number;
+  sistol: number;
+  diastol: number;
+  nadi: number;
+  pernafasan: number;
+  suhu: number;
+  konjungtiva: number;
+  kelenjar_getah_bening: number;
+  tonsil: number;
+  rate: number;
+  qtc: number;
+  penyakit: string;
+}
+
+export interface SimilarCase {
+  index: number;
+  distance: number;
+  record: CaseRecord;
+}

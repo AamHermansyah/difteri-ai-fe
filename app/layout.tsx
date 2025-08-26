@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Chivo } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const chivo = Chivo({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default function RootLayout({
         className={`${chivo.className} antialiased`}
       >
         {children}
+        <Toaster richColors />
       </body>
     </html>
   );

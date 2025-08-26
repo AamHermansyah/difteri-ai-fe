@@ -15,7 +15,10 @@ function Navbar({ className }: IProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/50 border-b border-white/10">
+    <nav className={cn(
+      'sticky top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/50 border-b border-white/10',
+      pathname === '/diagnosa/hasil' && 'print:hidden'
+    )}>
       <div
         className={cn(
           'px-10 md:px-4 xl:container mx-auto py-4',

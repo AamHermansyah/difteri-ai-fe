@@ -26,9 +26,9 @@ import {
 } from "@/components/ui/select";
 
 import {
-  ChevronRight,
   ChevronLeft,
-  ClipboardList
+  ClipboardList,
+  LoaderCircle
 } from "lucide-react";
 import { AdditionalFormValues, additionalSchema } from "@/lib/schemas/diagnosa";
 
@@ -37,9 +37,10 @@ interface IProps {
   onClickPrev?: () => void;
   onSuccess?: (data: AdditionalFormValues) => void;
   data: AdditionalFormValues | null;
+  loading: boolean;
 }
 
-function AdditionalForm({ disabledPrev, onClickPrev, onSuccess, data }: IProps) {
+function AdditionalForm({ disabledPrev, onClickPrev, onSuccess, data, loading }: IProps) {
   const form = useForm<AdditionalFormValues>({
     resolver: zodResolver(additionalSchema),
     mode: "onChange",
@@ -149,16 +150,17 @@ function AdditionalForm({ disabledPrev, onClickPrev, onSuccess, data }: IProps) 
             disabled={disabledPrev}
             className="border-white/20 text-white hover:bg-white/10 disabled:opacity-50"
           >
-            <ChevronLeft className="w-4 h-4 mr-2" />
+            <ChevronLeft className="w-4 h-4" />
             Sebelumnya
           </Button>
 
           <Button
             type="submit"
             className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0 disabled:opacity-60"
+            disabled={loading}
           >
-            Selesai
-            <ChevronRight className="w-4 h-4 ml-2" />
+            Mulai Diagnosa
+            {loading && <LoaderCircle className="w-4 h-4 animate-spin" />}
           </Button>
         </div>
       </form>
