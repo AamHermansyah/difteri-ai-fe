@@ -73,10 +73,12 @@ function DiagnosaLayout() {
   const handleDiagnosa = async (data: AdditionalFormValues) => {
     setLoading(true);
 
+    const url = process.env.NEXT_PUBLIC_API_URL || '';
+
     const defaultFeatures = ["id_casebase", "no_rm", "nama", "penyakit"];
     let features: string[] = [];
     try {
-      const res = await fetch('http://localhost:8000/health', {
+      const res = await fetch(`${url}/health`, {
         headers: { 'Content-Type': 'application/json' },
       });
 
@@ -110,10 +112,8 @@ function DiagnosaLayout() {
       additional: data
     }));
 
-    const url = process.env.NEXT_PUBLIC_API_URL || '';
-
     try {
-      const res = await fetch(url, {
+      const res = await fetch(`${url}/predict`, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' },
