@@ -10,44 +10,44 @@ const chivo = Chivo({
 export const metadata: Metadata = {
   metadataBase: new URL("https://ayocekdifteri.com"),
   title: {
-    default: "DifteriAI - Deteksi Penyakit Difteri dengan AI",
-    template: "%s | DifteriAI",
+    default: "AyoCekDifteri - Deteksi Penyakit Difteri dengan AI",
+    template: "%s | AyoCekDifteri",
   },
   description:
-    "DifteriAI adalah website berbasis kecerdasan buatan untuk memprediksi dan mendeteksi penyakit difteri secara cepat, akurat, dan mudah.",
+    "AyoCekDifteri adalah website berbasis kecerdasan buatan untuk memprediksi dan mendeteksi penyakit difteri secara cepat, akurat, dan mudah.",
   keywords: [
     "difteri",
     "AI kesehatan",
     "prediksi penyakit",
     "kecerdasan buatan",
     "diagnosis difteri",
-    "DifteriAI",
+    "AyoCekDifteri",
   ],
-  authors: [{ name: "DifteriAI Team" }],
-  creator: "DifteriAI",
-  publisher: "DifteriAI",
+  authors: [{ name: "AyoCekDifteri Team" }],
+  creator: "AyoCekDifteri",
+  publisher: "AyoCekDifteri",
   alternates: {
     canonical: "https://ayocekdifteri.com",
   },
   openGraph: {
     type: "website",
     url: "https://ayocekdifteri.com",
-    title: "DifteriAI - Deteksi Penyakit Difteri dengan AI",
+    title: "AyoCekDifteri - Deteksi Penyakit Difteri dengan AI",
     description:
       "Prediksi penyakit difteri secara cepat dan akurat menggunakan kecerdasan buatan.",
-    siteName: "DifteriAI",
+    siteName: "AyoCekDifteri",
     images: [
       {
         url: "https://ayocekdifteri.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "DifteriAI Preview",
+        alt: "AyoCekDifteri Preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DifteriAI - Deteksi Penyakit Difteri dengan AI",
+    title: "AyoCekDifteri - Deteksi Penyakit Difteri dengan AI",
     description:
       "Prediksi penyakit difteri secara cepat dan akurat menggunakan kecerdasan buatan.",
     images: ["https://ayocekdifteri.com/og-image.png"],

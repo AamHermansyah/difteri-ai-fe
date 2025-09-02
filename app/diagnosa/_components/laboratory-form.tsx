@@ -135,7 +135,7 @@ function LaboratoryForm({ disabledPrev, onClickPrev, onSuccess, data }: IProps) 
             <NumField name="m_c_h_c" label="MCHC" unit="g/dL" step="0.1" placeholder="34" />
             <NumField name="leukosit" label="Leukosit" unit="×10³/µL" step="0.1" placeholder="17.3" />
             <NumField name="trombosit" label="Trombosit" unit="×10³/µL" step="1" placeholder="311" />
-            <NumField name="laju_endap_darah" label="LED (ESR)" unit="mm/jam" step="1" placeholder="33" />
+            <NumField name="laju_endap_darah" label="Laju Endap Darah" unit="mm/jam" step="1" placeholder="33" />
           </div>
         </div>
 

@@ -24,3 +24,23 @@ export function normalizeData(data: Record<string, string | number>) {
 
   return result;
 }
+
+export function censorName(name: string): string {
+  if (!name) return "";
+
+  return name
+    .split(" ") // pisah per kata
+    .map((word) => {
+      if (word.length <= 2) {
+        // kalau terlalu pendek, tidak perlu sensor
+        return word;
+      }
+
+      const first = word[0];
+      const last = word[word.length - 1];
+      const middle = "*".repeat(word.length - 2);
+
+      return first + middle + last;
+    })
+    .join(" ");
+}

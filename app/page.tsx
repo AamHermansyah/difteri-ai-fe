@@ -63,7 +63,7 @@ export default function DifteriLandingPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative z-10 px-10 md:px-4 xl:container mx-auto pt-20 pb-32">
+      <section className="relative z-10 px-4 md:px-10 xl:container mx-auto pt-20 pb-32">
         <div className="text-center max-w-5xl mx-auto">
           <Badge className="mb-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-blue-300 border-blue-500/30 backdrop-blur-sm">
             <Zap className="w-3 h-3 mr-1" />
@@ -115,8 +115,8 @@ export default function DifteriLandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section id="stats" className="relative z-10 px-10 md:px-4 xl:container mx-auto pb-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <section id="stats" className="relative z-10 px-4 md:px-10 xl:container mx-auto pb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((stat, i) => (
             <Card
               key={`stat-${i}`}
@@ -136,7 +136,7 @@ export default function DifteriLandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="relative z-10 px-10 md:px-4 xl:container mx-auto py-20">
+      <section id="features" className="relative z-10 px-4 md:px-10 xl:container mx-auto py-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -164,7 +164,7 @@ export default function DifteriLandingPage() {
       </section>
 
       {/* How it Works Section */}
-      <section id="how-it-works" className="relative z-10 px-10 md:px-4 xl:container mx-auto py-20">
+      <section id="how-it-works" className="relative z-10 px-4 md:px-10 xl:container mx-auto py-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -204,8 +204,8 @@ export default function DifteriLandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative z-10 px-10 md:px-4 xl:container mx-auto py-20">
-        <Card className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-white/10 backdrop-blur-xl p-12 text-center">
+      <section className="relative z-10 px-4 md:px-10 xl:container mx-auto py-20">
+        <Card className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-white/10 backdrop-blur-xl px-6 sm:px-12 py-12 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
             Siap untuk Meningkatkan Diagnosa Difteri?
           </h2>

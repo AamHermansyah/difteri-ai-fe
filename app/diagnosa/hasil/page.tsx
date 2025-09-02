@@ -250,7 +250,7 @@ export default function DiagnosisResultPage() {
                       <metric.icon className="w-5 h-5 text-blue-400" />
                       <span className="text-gray-300">{metric.label}</span>
                     </div>
-                    <span className="font-semibold text-white">{metric.value}</span>
+                    <span className="font-semibold text-white capitalize">{metric.value}</span>
                   </div>
                 ))}
               </div>

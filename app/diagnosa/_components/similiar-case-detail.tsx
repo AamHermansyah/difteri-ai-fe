@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { SimilarCase } from '@/lib/types';
 import { Details } from './details';
+import { censorName } from '@/lib/utils';
 
 interface SimilarCasesProps {
   similarCases: SimilarCase[];
@@ -57,7 +58,7 @@ const SimilarCasesDetail: React.FC<SimilarCasesProps> = ({ similarCases }) => {
                   <div>
                     <h4 className="font-semibold text-white">Kasus #{caseData.index}</h4>
                     <h6 className="flex items-center gap-2 text-sm text-gray-400">
-                      {caseData.record.nama} • {caseData.record.usia} tahun
+                      {censorName(caseData.record.nama)} • {caseData.record.usia} tahun
                     </h6>
                     <p className="text-sm text-gray-400">
                       Kesamaan: {similarity}%

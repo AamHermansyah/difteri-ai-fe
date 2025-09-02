@@ -1,4 +1,5 @@
 import { SimilarCase } from "@/lib/types";
+import { censorName } from "@/lib/utils";
 import { Activity, AlertCircle, CheckCircle, Heart, Minus, TestTube, User, XCircle } from "lucide-react";
 
 interface DetailProps {
@@ -35,7 +36,7 @@ export const Details: React.FC<DetailProps> = ({ caseData, bpStatus, tempStatus 
           </div>
           <div className="p-3 rounded-lg bg-white/5">
             <div className="text-sm text-gray-400">Nama</div>
-            <div className="font-semibold text-white">{caseData.record.nama}</div>
+            <div className="font-semibold text-white">{censorName(caseData.record.nama)}</div>
           </div>
           <div className="p-3 rounded-lg bg-white/5">
             <div className="text-sm text-gray-400">Berat Badan</div>

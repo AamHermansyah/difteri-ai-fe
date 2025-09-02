@@ -36,7 +36,7 @@ function Navbar({ className }: IProps) {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  DifteriAI
+                  AyoCekDifteri
                 </h1>
                 <p className="text-xs text-gray-400">CBR-ML System</p>
               </div>
