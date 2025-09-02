@@ -110,8 +110,10 @@ function DiagnosaLayout() {
       additional: data
     }));
 
+    const url = process.env.NEXT_PUBLIC_API_URL || '';
+
     try {
-      const res = await fetch('http://localhost:8000/predict', {
+      const res = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(payload),
         headers: { 'Content-Type': 'application/json' },
