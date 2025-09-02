@@ -33,6 +33,7 @@ import RecommendationsSection from '../_components/recommendations-section';
 import { useDiagnosisStore } from '@/stores/use-diagnosis-store';
 import { useRouter } from 'next/navigation';
 import { useHasHydrated } from "../_hooks/use-has-hydrated";
+import { cn, getColorProgress } from "@/lib/utils";
 
 export default function DiagnosisResultPage() {
   const { confidence, diagnosis, similar_cases, similar_cases_detailed, top_scores } = useDiagnosisStore();
@@ -145,9 +146,13 @@ export default function DiagnosisResultPage() {
                 <span className="text-sm text-gray-400">Tingkat Kepercayaan</span>
                 <span className="text-sm font-bold text-white">{confidencePercentage}%</span>
               </div>
+
               <Progress
                 value={confidencePercentage}
-                className="h-4 bg-white/10"
+                className={cn(
+                  'h-4 bg-white/10',
+                  getColorProgress(confidencePercentage)
+                )}
               />
             </div>
           </div>

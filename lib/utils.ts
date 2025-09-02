@@ -44,3 +44,9 @@ export function censorName(name: string): string {
     })
     .join(" ");
 }
+
+export const getColorProgress = (val: number) => {
+  if (val < 40) return "[&>[data-slot=progress-indicator]]:bg-green-500";
+  if (val < 70) return "[&>[data-slot=progress-indicator]]:bg-yellow-500";
+  return "[&>[data-slot=progress-indicator]]:bg-red-500";
+};
